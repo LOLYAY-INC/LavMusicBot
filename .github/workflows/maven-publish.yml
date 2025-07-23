@@ -66,7 +66,7 @@ jobs:
     - name: Get JAR filename
       id: get_jar
       run: |
-        JAR_FILE=$(find target -maxdepth 1 -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" | head -n 1)
+        JAR_FILE=$(find target -maxdepth 1 -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*original*" | head -n 1)
         echo "path=$JAR_FILE" >> $GITHUB_OUTPUT
         echo "name=$(basename $JAR_FILE)" >> $GITHUB_OUTPUT
 
