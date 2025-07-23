@@ -22,6 +22,11 @@
 
     <repositories>
         <repository>
+            <id>lolyay-releases</id>
+            <name>lolyay.dev Maven Repo</name>
+            <url>https://maven.lolyay.dev/releases</url>
+        </repository>
+        <repository>
             <id>TopiWTF-releases</id>
             <name>Topis Maven Repo</name>
             <url>https://maven.topi.wtf/releases</url>
@@ -48,12 +53,6 @@
             <id>lavalink</id>
             <name>Lavalink Repository</name>
             <url>https://maven.lavalink.dev/releases</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
         <repository>
             <id>central</id>
@@ -80,6 +79,18 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
