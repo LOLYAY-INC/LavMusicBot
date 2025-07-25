@@ -43,7 +43,11 @@ public class Prefixer {
         AbstractPrefixer prefixer = this.getPrefixer(message);
         if (prefixer != null) {
             CommandContext context = prefixer.generateContext(message);
-            prefixer.getReferer().execute(context);
+            try {
+                prefixer.getReferer().execute(context);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

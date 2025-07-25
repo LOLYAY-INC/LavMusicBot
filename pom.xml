@@ -128,11 +128,7 @@
             <artifactId>json</artifactId>
             <version>20240303</version> <!-- Or the latest version -->
         </dependency>
-        <dependency>
-            <groupId>com.github.topi314.lavasrc</groupId>
-            <artifactId>lavasrc</artifactId>
-            <version>4.7.2</version>
-        </dependency>
+
         <dependency>
             <groupId>org.jitsi</groupId>
             <artifactId>libjitsi</artifactId>
@@ -182,34 +178,29 @@
             <artifactId>config</artifactId>
             <version>1.4.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.20.1</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.arbjerg</groupId>
-            <artifactId>lavalink-client</artifactId>
-            <version>3.0.0</version>
-        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.17.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>dev.arbjerg</groupId>
-            <artifactId>lavaplayer</artifactId>
-            <version>2.2.4</version>
-        </dependency>
 
         <dependency>
-            <groupId>dev.lavalink.youtube</groupId>
-            <artifactId>common</artifactId>
-            <version>1.13.3</version>
+            <groupId>dev.lolyay</groupId>
+            <artifactId>lavaboth</artifactId>
+            <version>5.5.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>dev.lolyay</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>1.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.lolyay</groupId>
+            <artifactId>lyricsv2</artifactId>
+            <version>1.4.4</version>
+        </dependency>
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.grack</groupId>

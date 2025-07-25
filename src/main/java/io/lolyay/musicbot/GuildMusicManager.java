@@ -1,14 +1,17 @@
 package io.lolyay.musicbot;
 
 
-import io.lolyay.JdaMain;
 import io.lolyay.config.guildconfig.GuildConfig;
-import io.lolyay.musicbot.backendswapper.AbstractPlayerManager;
+import io.lolyay.lavaboth.backends.common.AbstractPlayer;
+import io.lolyay.lavaboth.backends.common.AbstractPlayerManager;
+import io.lolyay.lavaboth.tracks.MusicAudioTrack;
+import io.lolyay.musicbot.lyrics.SyncedLyricsPlayer;
 import io.lolyay.musicbot.queue.QueManager;
 import io.lolyay.musicbot.queue.RepeatMode;
-import io.lolyay.musicbot.tracks.MusicAudioTrack;
 
 import java.util.List;
+
+import static io.lolyay.LavMusicBot.jda;
 
 /**
  * Manages all audio operations for a single Guild.
@@ -16,23 +19,23 @@ import java.util.List;
  */
 public class GuildMusicManager {
 
-    private final AbstractPlayerManager playerManager;
     private final QueManager queManager;
     private final long guildId;
     private long volume;
     private final GuildConfig config;
     private boolean isPaused = false;
+    private final AbstractPlayer player;
 
     // A flag to track the playing state to prevent race conditions.
     private volatile boolean isPlaying = false;
 
-    public GuildMusicManager(AbstractPlayerManager playerManager, long guildId, GuildConfig config) {
-        this.playerManager = playerManager;
+    public GuildMusicManager(long guildId, GuildConfig config, AbstractPlayerManager playerManager) {
         this.guildId = guildId;
         this.queManager = new QueManager(config);
         this.queManager.init(); // Load settings like repeat mode
         this.config = config;
         this.volume = config.volume();
+        player = playerManager.getPlayerFactory().getOrCreatePlayer(guildId);
     }
 
     /**
@@ -59,7 +62,8 @@ public class GuildMusicManager {
         // get(0) gets the track at the head of the queue without removing it.
         MusicAudioTrack firstTrack = queManager.getQueue().get(0);
         this.isPlaying = true;
-        playerManager.playTrack(firstTrack);
+        player.play(firstTrack);
+
     }
 
     /**
@@ -68,16 +72,17 @@ public class GuildMusicManager {
     public void stop() {
         this.isPlaying = false;
         queManager.clear();
-        playerManager.stop(guildId);
+        player.stop();
+        player.disconnect(jda.getGuildById(guildId));
     }
 
     public void pause() {
-        playerManager.pause(guildId);
+        player.pause();
         isPaused = true;
     }
 
     public void resume() {
-        playerManager.resume(guildId);
+        player.resume();
         isPaused = false;
     }
 
@@ -93,7 +98,9 @@ public class GuildMusicManager {
         return isPaused;
     }
 
-
+    public AbstractPlayer getPlayer() {
+        return player;
+    }
 
     /**
      * Skips the current track and plays the next one in the queue.
@@ -103,7 +110,7 @@ public class GuildMusicManager {
         MusicAudioTrack nextTrack = queManager.skip();
         if (nextTrack != null) {
             isPlaying = true;
-            playerManager.playTrack(nextTrack);
+            player.play(nextTrack);
             config.plays(config.plays() + 1);
             return currentrack;
         } else {
@@ -123,12 +130,13 @@ public class GuildMusicManager {
 
         if (nextTrack != null) {
             // If there's a next track, play it. State remains isPlaying=true.
-            playerManager.playTrack(nextTrack);
+            player.play(nextTrack);
             config.plays(config.plays() + 1);
         } else {
             // The queue is now empty, so we are no longer playing.
             this.isPlaying = false;
-            JdaMain.jda.getDirectAudioController().disconnect(JdaMain.jda.getGuildById(guildId));
+            SyncedLyricsPlayer.stop(guildId);
+            player.disconnect(jda.getGuildById(guildId));
         }
     }
 
@@ -143,7 +151,7 @@ public class GuildMusicManager {
     public void setVolume(long volume) {
         this.volume = volume;
         this.config.volume((int) volume);
-        playerManager.setVolume(this.guildId, (int) volume);
+        player.setVolume((int) volume);
     }
     public long getVolume() { return this.volume; }
     public QueManager getQueManager() { return queManager; }

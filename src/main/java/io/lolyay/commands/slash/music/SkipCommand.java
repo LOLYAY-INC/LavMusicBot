@@ -2,11 +2,11 @@
 package io.lolyay.commands.slash.music;
 
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
-import io.lolyay.musicbot.tracks.MusicAudioTrack;
+import io.lolyay.lavaboth.tracks.MusicAudioTrack;
 import io.lolyay.utils.Emoji;
 
 public class SkipCommand extends Command {
@@ -34,12 +34,12 @@ public class SkipCommand extends Command {
 
     @Override
     public void execute(CommandContext event) {
-        if (!JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).isPlaying()) {
+        if (!LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).isPlaying()) {
             event.reply(Emoji.ERROR.getCode() + " No Track is playing, couldn't skip!").queue();
             return;
         }
 
-        MusicAudioTrack currentTrack = JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).skip();
+        MusicAudioTrack currentTrack = LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).skip();
         if(currentTrack == null)
             event.reply(Emoji.SUCCESS.getCode() + " No more Tracks to play, stopping!").queue();
         else

@@ -1,7 +1,7 @@
 
 package io.lolyay.commands.slash.music;
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOptionMultiple;
@@ -61,7 +61,7 @@ public class RepeatModeCommand extends Command {
             event.reply(Emoji.ERROR.getCode() + " Invalid repeat mode: `" + argsstr + "` Valid modes: `false`, `true`, `all`, `one`, `single`").queue();
             return;
         }
-        JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).setRepeatMode(value);
+        LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).setRepeatMode(value);
         event.reply(Emoji.SUCCESS.getCode() + " Repeat mode is now `"+value.getUserFriendlyName()+"`").queue();
     }
 }

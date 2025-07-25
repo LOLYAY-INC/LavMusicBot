@@ -4,7 +4,7 @@ package io.lolyay.commands.slash.music;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
-import io.lolyay.musicbot.lyrics.live.SyncedLyricsPlayer;
+import io.lolyay.musicbot.lyrics.SyncedLyricsPlayer;
 import io.lolyay.utils.Emoji;
 
 public class StopLiveLyricsCommand extends Command {

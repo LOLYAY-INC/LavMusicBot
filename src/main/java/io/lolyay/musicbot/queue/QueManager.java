@@ -1,7 +1,7 @@
 package io.lolyay.musicbot.queue;
 
 import io.lolyay.config.guildconfig.GuildConfig;
-import io.lolyay.musicbot.tracks.MusicAudioTrack;
+import io.lolyay.lavaboth.tracks.MusicAudioTrack;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -19,6 +19,7 @@ public class QueManager {
     private final List<MusicAudioTrack> queue = new LinkedList<>();
     private RepeatMode repeatMode = RepeatMode.OFF;
     private final GuildConfig config;
+    public long lastSongStartTimeMillis = System.currentTimeMillis();
 
     public QueManager(GuildConfig config) {
         this.config = config;

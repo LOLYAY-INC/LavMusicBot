@@ -1,6 +1,6 @@
 package io.lolyay.embedmakers;
 
-import io.lolyay.musicbot.lyrics.records.Lyrics;
+import io.lolyay.lyrics.records.Lyrics;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 public class LyricsEmbedGenerator {

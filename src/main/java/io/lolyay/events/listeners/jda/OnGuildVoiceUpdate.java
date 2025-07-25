@@ -1,8 +1,8 @@
 package io.lolyay.events.listeners.jda;
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.config.ConfigManager;
-import io.lolyay.customevents.EventListener;
+import io.lolyay.eventbus.EventListener;
 import io.lolyay.utils.Logger;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ public class OnGuildVoiceUpdate {
             Logger.log("Alone in voice channel, leaving...");
             //   event.getJDA().getDirectAudioController().disconnect(event.getGuild());
             if (ConfigManager.getConfigBool("stop-on-empty-channel")) {
-                JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).stop();
+                LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).stop();
                 Logger.debug("Cleared queue");
             }
         }

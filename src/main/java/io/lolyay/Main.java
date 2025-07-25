@@ -3,8 +3,8 @@ package io.lolyay;
 import io.lolyay.config.ConfigLoader;
 import io.lolyay.config.guildconfig.GuildConfigLoader;
 import io.lolyay.config.guildconfig.GuildConfigManager;
-import io.lolyay.customevents.events.lifecycle.PreInitEvent;
 import io.lolyay.events.EventRegistrer;
+import io.lolyay.events.lifecycle.PreInitEvent;
 import io.lolyay.utils.KVPair;
 import io.lolyay.utils.Logger;
 
@@ -40,8 +40,8 @@ public class Main {
         try {
             EventRegistrer.register();
 
-            JdaMain.eventBus.post(new PreInitEvent());
-            JdaMain.init();
+            LavMusicBot.eventBus.post(new PreInitEvent());
+            LavMusicBot.init();
         } catch (Exception e) {
             Logger.err("Error while starting bot: ");
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class Main {
             case "-DEBUG":
             {
                 Logger.log("Debug mode enabled");
-                JdaMain.debug = true;
+                LavMusicBot.debug = true;
                 break;
             }
 
@@ -78,7 +78,7 @@ public class Main {
             case "-NO_REGISTER_COMMANDS":
             {
                 Logger.warn("Registering commands...");
-                JdaMain.shouldRegisterCommands = false;
+                LavMusicBot.shouldRegisterCommands = false;
                 break;
             }
         }

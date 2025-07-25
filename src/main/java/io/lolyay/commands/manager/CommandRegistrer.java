@@ -1,6 +1,6 @@
 package io.lolyay.commands.manager;
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.config.ConfigManager;
 import io.lolyay.utils.KVPair;
 import io.lolyay.utils.Logger;
@@ -26,7 +26,11 @@ public class CommandRegistrer {
             event.reply("You don't have permission to use this command").setEphemeral(true).queue();
             return;
         }
-        command.execute(CommandContext.of(event));
+        try {
+            command.execute(CommandContext.of(event));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -46,8 +50,8 @@ public class CommandRegistrer {
             registerCommandImpl(command);
         }
 
-        clearBotCommands(JdaMain.jda.retrieveCommands().complete());
-        JdaMain.jda.updateCommands().addCommands(commands).complete();
+        clearBotCommands(LavMusicBot.jda.retrieveCommands().complete());
+        LavMusicBot.jda.updateCommands().addCommands(commands).complete();
         // not needed : registertorun();
         Logger.debug("Registered Commands");
         Logger.success("Bot is now Ready, You can use it now!");
@@ -62,7 +66,7 @@ public class CommandRegistrer {
     public static void registerUnregisteredCommands() {
         try {
             // Get all currently registered command names
-            List<String> registeredCommandNames = JdaMain.jda.retrieveCommands().complete()
+            List<String> registeredCommandNames = LavMusicBot.jda.retrieveCommands().complete()
                     .stream()
                     .map(net.dv8tion.jda.api.interactions.commands.Command::getName)
                     .toList();
@@ -86,7 +90,7 @@ public class CommandRegistrer {
 
             // Register new commands if any
             if (!commandsToRegister.isEmpty()) {
-                clearBotCommands(JdaMain.jda.retrieveCommands().complete());
+                clearBotCommands(LavMusicBot.jda.retrieveCommands().complete());
                 commandsToRegister.clear();
                 commandsToAdd.clear();
                 for (Command command : commandsToBeRegistered) {
@@ -97,7 +101,7 @@ public class CommandRegistrer {
                     }
 
                 }
-                JdaMain.jda.updateCommands().addCommands(commandsToRegister).queue(
+                LavMusicBot.jda.updateCommands().addCommands(commandsToRegister).queue(
                         success -> {
                             Logger.success("Successfully registered " + commandsToRegister.size() + " new commands, Bot is now Ready, You can use it now!");
                             // Only add to runtime commands after successful registration
@@ -147,7 +151,7 @@ public class CommandRegistrer {
     private static void clearBotCommands(List<net.dv8tion.jda.api.interactions.commands.Command> commandList) {
         for (net.dv8tion.jda.api.interactions.commands.Command command : commandList) {
             try {
-                JdaMain.jda.deleteCommandById(command.getId()).complete();
+                LavMusicBot.jda.deleteCommandById(command.getId()).complete();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -219,7 +223,7 @@ public class CommandRegistrer {
         if (!ConfigManager.getConfigBool("permissions-enabled"))
             return true;
         for (String role : adminRoles) {
-            if (member.getRoles().contains(JdaMain.jda.getRoleById(role))) {
+            if (member.getRoles().contains(LavMusicBot.jda.getRoleById(role))) {
                 return !ConfigManager.getConfigBool("whitelist-acts-as-blacklist");
             }
         }

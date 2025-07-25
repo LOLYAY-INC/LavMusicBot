@@ -8,11 +8,12 @@ public enum Emoji {
     MUSIC("🎶"),
     PLAY("▶️"),
     PAUSE("⏸️"),
-    SEARCH("🔎");
+    SEARCH("🔎"),
+    CD("💿");
 
 
-    private String code;
-    private net.dv8tion.jda.api.entities.emoji.Emoji emoji;
+    private final String code;
+    private final net.dv8tion.jda.api.entities.emoji.Emoji emoji;
 
     Emoji(String code) {
         this.code = code;

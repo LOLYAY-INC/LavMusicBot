@@ -2,7 +2,7 @@
 package io.lolyay.commands.slash.info;
 
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
@@ -36,7 +36,7 @@ public class StatusCommand extends Command {
 
     @Override
     public void execute(CommandContext event) {
-        GuildMusicManager musicManager = JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong());
+        GuildMusicManager musicManager = LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong());
         event.replyEmbeds(Collections.singletonList(StatusEmbedGenerator.generate(musicManager).build())).queue();
     }
 }

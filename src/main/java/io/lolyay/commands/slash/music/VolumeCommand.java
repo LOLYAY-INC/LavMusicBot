@@ -1,7 +1,7 @@
 
 package io.lolyay.commands.slash.music;
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
@@ -42,8 +42,8 @@ public class VolumeCommand extends Command
             event.reply(Emoji.ERROR.getCode() +" Volume must be a valid integer between 0 and 150!").queue();
         else
         {
-            event.reply( Emoji.SUCCESS.getCode() + " Volume changed from `"+ (int) JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).getVolume() +"` to `"+nvolume+"`").queue();
-            JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).setVolume(nvolume);
+            event.reply(Emoji.SUCCESS.getCode() + " Volume changed from `" + (int) LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).getVolume() + "` to `" + nvolume + "`").queue();
+            LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).setVolume(nvolume);
         }
 
     }

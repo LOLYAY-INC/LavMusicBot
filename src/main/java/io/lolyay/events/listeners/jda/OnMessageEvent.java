@@ -2,7 +2,7 @@ package io.lolyay.events.listeners.jda;
 
 import io.lolyay.commands.prefixer.Prefixer;
 import io.lolyay.config.ConfigManager;
-import io.lolyay.customevents.EventListener;
+import io.lolyay.eventbus.EventListener;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import static io.lolyay.commands.manager.CommandRegistrer.canRunCommand;

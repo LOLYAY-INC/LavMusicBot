@@ -2,7 +2,7 @@
 package io.lolyay.commands.slash.music;
 
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
@@ -33,8 +33,8 @@ public class StopCommand extends Command {
 
     @Override
     public void execute(CommandContext event) {
-        if(JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).isPlaying()){
-            JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong()).stop();
+        if (LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).isPlaying()) {
+            LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong()).stop();
             event.reply(Emoji.SUCCESS.getCode() + " Stopped Playback and Cleared the queue!").queue();
         }
         else

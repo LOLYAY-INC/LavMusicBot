@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class OtherUtil
 {
@@ -66,6 +67,12 @@ public class OtherUtil
         }
         catch(IOException | IllegalArgumentException ignore) {}
         return null;
+    }
+
+    public static long guildIdFromToken(String token) {
+        return Long.parseLong(
+                new String(Base64.getDecoder().decode(token.split("\\.")[0]))
+        );
     }
 
    

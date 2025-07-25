@@ -4,11 +4,13 @@ import net.dv8tion.jda.api.requests.RestAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 
+import javax.annotation.CheckReturnValue;
 import java.util.function.Consumer;
 
 public class ReplyBuilder<T> {
     private final RestAction<T> action;
 
+    @CheckReturnValue
     public ReplyBuilder(RestAction<T> action) {
         if (action == null) {
             throw new IllegalArgumentException("Action cannot be null");
@@ -16,6 +18,7 @@ public class ReplyBuilder<T> {
         this.action = action;
     }
 
+    @CheckReturnValue
     public ReplyBuilder<T> setEphemeral(boolean ephemeral) {
         if (action instanceof ReplyCallbackAction) {
             ((ReplyCallbackAction) action).setEphemeral(ephemeral);
@@ -34,6 +37,7 @@ public class ReplyBuilder<T> {
         action.queue(success);
     }
 
+    @CheckReturnValue
     public T complete() {
         return action.complete();
     }

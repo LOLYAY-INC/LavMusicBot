@@ -2,7 +2,6 @@ package io.lolyay.config.jsonnodes;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import dev.arbjerg.lavalink.client.NodeOptions;
 import io.lolyay.config.ConfigManager;
 import io.lolyay.utils.Logger;
 
@@ -10,9 +9,7 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class NodesJsonManager {
     private static File getNodesFile() {
@@ -26,9 +23,8 @@ public class NodesJsonManager {
     }
 
 
-    public static ArrayList<NodeOptions> loadNodes() {
+    public static ArrayList<JsonNode> loadNodes() {
         // read nodes.json file
-        ArrayList<NodeOptions> nodes = new ArrayList<>();
         String json;
         try {
             json = new String(Files.readAllBytes(getNodesFile().toPath()));
@@ -41,13 +37,14 @@ public class NodesJsonManager {
                 Logger.err("nodes.json file is empty.");
                 System.exit(1);
             }
-            nodes = translateNodes(jNodeList);
-            Logger.debug("Loaded " + nodes.size() + " nodes from nodes.json.");
+
+            Logger.debug("Loaded " + jNodeList.size() + " nodes from nodes.json.");
+            return jNodeList;
         } catch (Exception e) {
             Logger.err("Error loading nodes.json file: " + e.getMessage());
             System.exit(1);
         }
-        return nodes;
+        return null;
 
     }
 
@@ -56,17 +53,6 @@ public class NodesJsonManager {
         return new Gson().fromJson(json, nodeListType);
     }
 
-    private static ArrayList<NodeOptions> translateNodes(ArrayList<JsonNode> nodeList) {
-        ArrayList<NodeOptions> nodes = new ArrayList<>();
-        for (JsonNode node : nodeList) {
-            nodes.add(new NodeOptions.Builder()
-                    .setName(node.identifier())
-                    .setPassword(node.password())
-                    .setServerUri(getConProtocol(node) + node.host() + ":" + node.port())
-                    .build());
-        }
-        return nodes;
-    }
 
     private static String getConProtocol(JsonNode node) {
         return node.secure() ? "wss://" : "ws://";

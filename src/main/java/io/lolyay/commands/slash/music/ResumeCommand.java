@@ -2,7 +2,7 @@
 package io.lolyay.commands.slash.music;
 
 
-import io.lolyay.JdaMain;
+import io.lolyay.LavMusicBot;
 import io.lolyay.commands.manager.Command;
 import io.lolyay.commands.manager.CommandContext;
 import io.lolyay.commands.manager.CommandOption;
@@ -34,7 +34,7 @@ public class ResumeCommand extends Command {
 
     @Override
     public void execute(CommandContext event) {
-        GuildMusicManager musicManager = JdaMain.playerManager.getGuildMusicManager(event.getGuild().getIdLong());
+        GuildMusicManager musicManager = LavMusicBot.getGuildMusicManager(event.getGuild().getIdLong());
         if(!musicManager.isPlaying()){
             event.reply(Emoji.ERROR.getCode() + " No Track was playing, couldn't resume!").queue();
             return;
