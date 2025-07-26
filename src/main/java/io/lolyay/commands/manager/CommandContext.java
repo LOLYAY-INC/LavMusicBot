@@ -4,6 +4,7 @@ import io.lolyay.commands.helpers.EditBuilder;
 import io.lolyay.commands.helpers.ModalBuilder;
 import io.lolyay.commands.helpers.ReplyBuilder;
 import io.lolyay.utils.KVPair;
+import io.lolyay.utils.Logger;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.unions.GuildChannelUnion;
@@ -136,7 +137,7 @@ public class CommandContext {
             }
             return null;
         }
-        return CommandOption.of(options.get(name), name);
+        return CommandOption.of(options.get(name), name, type == Type.SLASH, message);
     }
 
     @Nullable
@@ -145,7 +146,7 @@ public class CommandContext {
             return null;
         }
         Map.Entry<String, KVPair<OptionType, Object>> entry = options.entrySet().stream().toList().get(position);
-        return CommandOption.of(entry.getValue(), entry.getKey());
+        return CommandOption.of(entry.getValue(), entry.getKey(), type == Type.SLASH, message);
     }
 
     public void deferReply(boolean ephemeral) {
@@ -284,20 +285,27 @@ public class CommandContext {
         private OptionType type;
         private Object value;
         private String name;
+        private boolean slash;
+        private Message message;
 
         public static CommandOption of(OptionMapping mapping) {
             CommandOption option = new CommandOption();
             option.type = mapping.getType();
             option.name = mapping.getName();
             option.value = optionMappingToValue(mapping);
+            if (option.value != null)
+                Logger.debug(option.value.getClass().getSimpleName());
             return option;
         }
 
-        public static CommandOption of(KVPair<OptionType, Object> mapping, String name) {
+        public static CommandOption of(KVPair<OptionType, Object> mapping, String name, boolean slash, Message message) {
             CommandOption option = new CommandOption();
             option.type = mapping.getKey();
+            option.message = message;
+            option.slash = slash;
             option.name = name;
             option.value = mapping.getValue();
+            Logger.debug(option.value.getClass().getSimpleName());
             return option;
         }
 
@@ -325,48 +333,92 @@ public class CommandContext {
         }
 
         public long getAsLong() {
-            return switch (this.type) {
-                case STRING, MENTIONABLE, CHANNEL, ROLE, USER, INTEGER, ATTACHMENT -> (Long) this.value;
-                default -> throw new IllegalStateException("Cannot convert option of type " + this.type + " to long");
-            };
+            if (this.slash)
+                return (Long) this.value;
+            return Long.parseLong((String) this.value);
         }
 
         public int getAsInt() {
-            return (int) this.getAsLong();
+            if (this.slash)
+                return (int) this.getAsLong();
+            return Integer.parseInt((String) this.value);
         }
 
         public double getAsDouble() {
-            return (Double) this.value;
+            if (this.slash)
+                return (Double) this.value;
+            return Double.parseDouble((String) this.value);
         }
 
         @Nonnull
         public IMentionable getAsMentionable() {
-            return (IMentionable) this.value;
+            if (this.slash)
+                return (IMentionable) this.value;
+            return new IMentionable() {
+                @Override
+                public @NotNull String getAsMention() {
+                    return value.toString();
+                }
+
+                @Override
+                public long getIdLong() {
+                    return Long.parseLong(value.toString());
+                }
+            };
         }
 
         @Nullable
         public Member getAsMember() {
-            return (Member) this.value;
+            if (this.slash)
+                return (Member) this.value;
+            String svalue = (String) this.value;
+            if (svalue.startsWith("<@")) {
+                return this.message.getGuild().getMemberById(Long.parseLong(svalue.substring(2, svalue.length() - 1)));
+            }
+            return this.message.getGuild().getMemberById(Long.parseLong(svalue));
         }
 
-        @Nonnull
+
         public User getAsUser() {
-            return (User) this.value;
+            if (this.slash)
+                return (User) this.value;
+            String svalue = (String) this.value;
+            if (svalue.startsWith("<@")) {
+                return this.message.getJDA().getUserById(Long.parseLong(svalue.substring(2, svalue.length() - 1)));
+            }
+            return this.message.getJDA().getUserById(Long.parseLong(svalue));
         }
 
-        @Nonnull
         public Role getAsRole() {
-            return (Role) this.value;
+            if (this.slash)
+                return (Role) this.value;
+            String svalue = (String) this.value;
+            if (svalue.startsWith("<@&")) {
+                return this.message.getGuild().getRoleById(Long.parseLong(svalue.substring(3, svalue.length() - 1)));
+            }
+            return this.message.getGuild().getRoleById(Long.parseLong(svalue));
         }
 
         @Nonnull
         public GuildChannelUnion getAsChannel() {
-            return (GuildChannelUnion) this.value;
+            if (this.slash)
+                return (GuildChannelUnion) this.value;
+            String svalue = (String) this.value;
+            if (svalue.startsWith("<#")) {
+                return this.message.getGuild().getChannelById(GuildChannelUnion.class, Long.parseLong(svalue.substring(2, svalue.length() - 1)));
+            }
+            return this.message.getGuild().getChannelById(GuildChannelUnion.class, Long.parseLong(svalue));
         }
 
         @Nonnull
         public ChannelType getChannelType() {
-            return this.getAsChannel().getType();
+            if (this.slash)
+                return (ChannelType) this.value;
+            String svalue = (String) this.value;
+            if (svalue.startsWith("<#")) {
+                return this.message.getGuild().getChannelById(GuildChannelUnion.class, Long.parseLong(svalue.substring(2, svalue.length() - 1))).getType();
+            }
+            return this.message.getGuild().getChannelById(GuildChannelUnion.class, Long.parseLong(svalue)).getType();
         }
     }
 }
