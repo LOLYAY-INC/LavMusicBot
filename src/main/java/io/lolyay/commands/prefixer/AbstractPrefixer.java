@@ -59,10 +59,10 @@ public abstract class AbstractPrefixer {
             if (i < arguments.size()) {
                 if (optionType.isGreedy()) {
                     String greedyArg = String.join(" ", arguments.subList(i, arguments.size()));
-                    options.add(CommandContext.CommandOption.of(new KVPair<>(optionType.getType(), greedyArg), optionType.getName()));
+                    options.add(CommandContext.CommandOption.of(new KVPair<>(optionType.getType(), greedyArg), optionType.getName(), false, message));
                     break;
                 } else {
-                    options.add(CommandContext.CommandOption.of(new KVPair<>(optionType.getType(), arguments.get(i)), optionType.getName()));
+                    options.add(CommandContext.CommandOption.of(new KVPair<>(optionType.getType(), arguments.get(i)), optionType.getName(), false, message));
                 }
             }
         }
