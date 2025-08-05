@@ -152,7 +152,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.5.1</version> <!-- replace $version with the latest version -->
+            <version>5.6.1</version> <!-- replace $version with the latest version -->
             <exclusions>
                 <!-- required for encoding audio into opus, not needed if audio is already provided in opus encoding -->
 
@@ -189,7 +189,7 @@
         <dependency>
             <groupId>dev.lolyay</groupId>
             <artifactId>lavaboth</artifactId>
-            <version>5.5.3</version>
+            <version>5.6.3</version>
         </dependency>
         <dependency>
             <groupId>dev.lolyay</groupId>
