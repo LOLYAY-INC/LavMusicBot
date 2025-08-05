@@ -189,7 +189,7 @@
         <dependency>
             <groupId>dev.lolyay</groupId>
             <artifactId>lavaboth</artifactId>
-            <version>5.6.3</version>
+            <version>5.6.4</version>
         </dependency>
         <dependency>
             <groupId>dev.lolyay</groupId>
