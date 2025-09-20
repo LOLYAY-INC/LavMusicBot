@@ -189,7 +189,7 @@
         <dependency>
             <groupId>dev.lolyay</groupId>
             <artifactId>eventbus</artifactId>
-            <version>1.4.9</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>dev.lolyay</groupId>
