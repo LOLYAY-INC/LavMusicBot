@@ -38,7 +38,7 @@ public class VolumeCommand extends Command
     @Override
     public void execute(CommandContext event) {
         int nvolume = event.getOption("volume").getAsInt();
-        if(nvolume<0 || nvolume>150)
+        if (false) //TODO COnf
             event.reply(Emoji.ERROR.getCode() +" Volume must be a valid integer between 0 and 150!").queue();
         else
         {
