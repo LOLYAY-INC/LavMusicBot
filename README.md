@@ -26,6 +26,7 @@ A simple yet powerful music bot for Discord, built with JDA and powered by Laval
 - [🗺️ Roadmap](#️-roadmap)
 - [🤝 Contributing](#-contributing)
 - [📜 License](#-license)
+- [Faq](#-faq)
 
 ---
 
@@ -105,10 +106,16 @@ This guide is for running the bot using the pre-compiled releases. No developmen
     Open the newly created `settings.yml` file with any text editor. Follow the guide below to configure the bot. You
     must at least provide your `discord-bot-token`.
 
-4.  **Run the Bot**
+4. **Remote Cipher Server**
+   If you want the best experience it is very recommended to host a `Remote cipher server` yourself.
+   Instructions on How to do that are at https://github.com/kikkia/yt-cipher.
+   After Hosting a Remote Cipher Server you need to fill out the `remote-ciphering-server-url` and
+   `remote-ciphering-server-password` in the `settings.yml` file.
+
+5. **Run the Bot**
     Once you have saved your changes to `settings.yml`, run the same command again:
     ```sh
-    java -jar LavMusicBot-1.0.0.jar
+    java -jar LavMusicBot.jar
     ```
     This time, the bot will read your configuration and connect to Discord. Congratulations!
 
@@ -283,5 +290,11 @@ you get from: [The lavalink Server List](https://lavalink-list.appujet.site/non-
 
 LavMusicBot is released under the [Apache License 2.0](https://github.com/LOLYAY-INC/LavMusicBot/blob/main/LICENSE).
 
+## Faq
 
-*Yes I'm sorry, a bit of this Readme is AI generated, But its correct and accurate*
+### The bot doesn't Play music and it prints `Suspicious exception for playback of xxxxxxxx, This video requires login.`
+
+This is because of YouTube's recent changes to their API. To fix this, you need to host a remote cipher server yourself.
+Instructions on How to do that are at https://github.com/kikkia/yt-cipher.
+
+### If you have any other Errors, Bugs or more create a Issue at https://github.com/LOLYAY-INC/LavMusicBot/issues

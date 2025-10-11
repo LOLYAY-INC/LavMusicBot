@@ -65,6 +65,18 @@ lavalink-password: "pleaseletmein"
 #and paste it here.
 youtube-oauth-refresh-token: ""
 
+# You WILL need a Remote-Ciphering Server for this bot to work
+#It becomes harder and harder to keep up with YouTube's cipher changes, as they become more frequent and complex.
+#To help with this, you can use a remote cipher server to handle signature deciphering for you.
+# There is a public instance of a remote cipher server, it will be used unless you input your own.
+# The public instance is RATE-LIMITED and SLOW so it is very recommended to host your own.
+
+# The url of the remote cipher server
+remote-ciphering-server-url: ""
+
+# The password for the remote cipher server
+remote-ciphering-server-password: ""
+
 # The country code for the Lavalink server to search in what language for, default is "us"
 country-code: "us"
 

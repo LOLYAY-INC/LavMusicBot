@@ -1,6 +1,7 @@
 package io.lolyay;
 
 
+import dev.lavalink.youtube.YoutubeSourceOptions;
 import io.lolyay.config.ConfigManager;
 import io.lolyay.lavaboth.backends.lavaplayer.player.LavaPlayerPlayerManager;
 import io.lolyay.lavaboth.backends.lavaplayer.sourceshelper.SourcesBuilder;
@@ -14,8 +15,14 @@ public class AdditionalSourcesManager {
     public static final String REFRESH_TOKEN = RefreshTokenStore.load() == null ? ConfigManager.getConfig("youtube-oauth-refresh-token") : RefreshTokenStore.load();
 
     public void setup(LavaPlayerPlayerManager playerManager) {
+        YoutubeSourceOptions sourceOptions = null;
+
+        if (!ConfigManager.getConfig("remote-ciphering-server-url").isEmpty()) {
+            sourceOptions = new YoutubeSourceOptions().setRemoteCipherUrl(ConfigManager.getConfig("remote-ciphering-server-url"), ConfigManager.getConfig("remote-ciphering-server-password").isEmpty() ? null : ConfigManager.getConfig("remote-ciphering-server-password"));
+        }
+
         SourcesBuilder sourcesBuilder = new SourcesBuilder(playerManager).addDefault()
-                .addYoutube(REFRESH_TOKEN);
+                .addYoutube(REFRESH_TOKEN, sourceOptions);
         if (ConfigManager.getConfigBool("enable-deezer"))
             sourcesBuilder.setupDeezer(ConfigManager.getConfig("deezer-decryption-key"),
                     ConfigManager.getConfig("deezer-arl-cookie"));

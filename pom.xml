@@ -184,7 +184,7 @@
         <dependency>
             <groupId>dev.lolyay</groupId>
             <artifactId>lavaboth</artifactId>
-            <version>5.7.1</version>
+            <version>5.8.0</version>
         </dependency>
         <dependency>
             <groupId>dev.lolyay</groupId>
