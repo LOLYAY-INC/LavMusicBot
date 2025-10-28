@@ -29,16 +29,8 @@ A simple yet powerful music bot for Discord, built with JDA and powered by Laval
 - [Faq](#-faq)
 
 ---
-
 ## 🤖 Use The Public Instance
-
-Don't want to bother with hosting it yourself? You can add the official instance of the bot to your server with just one click.
-
-*Note: The public bot is a shared resource. For the best performance and reliability, self-hosting is always recommended.*
-
-<a href="https://discord.com/oauth2/authorize?client_id=1381983517617033306">
-  <img src="https://img.shields.io/badge/Add%20to%20Your%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Add to Discord">
-</a>
+# The Public Instance is Deprecated and wont be Updated. Please Host the Bot Yourself!
 
 ## ✨ Features
 
